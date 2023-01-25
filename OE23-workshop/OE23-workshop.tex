@@ -1,0 +1,63 @@
+\documentclass{beamer}
+\usepackage[orientation=portrait,size=a4,scale=1.0]{beamerposter}
+\usepackage{textpos}
+\usepackage{anyfontsize}
+\usepackage{svg}
+
+\TPGrid[20mm,40mm]{1}{4}
+
+\begin{document}
+
+\begin{textblock}{1}(0,0)
+\fontsize{32}{36}\selectfont
+\begin{centering}
+OpenEmbedded Workshop
+
+February 6
+
+Brussels
+
+\end{centering}
+\end{textblock}
+
+\begin{textblock}{1}(0,1)
+\huge
+* unified key access and code signing in oe-core
+
+* Our ptest story
+
+* Applied git submodules
+
+* Integrating Zephyr using Yocto
+
+* Configuring Embedded FPGAs in U-Boot/Linux using an MTD driver
+
+* Developing, Building and Testing Your Baremetal Applications Using OpenEmbedded
+
+* Boot loaders, boot firmware, pre-boot firmware, and other namespace collisions
+
+* Generating SBoMs with OpenEmbedded
+
+* cve-check: all you wanted to know
+
+\end{textblock}
+
+\begin{textblock}{1}(0,2)
+
+\huge
+\begin{figure}
+\centering
+\caption{https://pretalx.com/orga/event/openembedded-workshop-2023/}
+\includesvg[scale=0.1]{qr-code.svg}
+\end{figure}
+
+\end{textblock}
+
+\begin{textblock}{1}(0,3)
+\begin{figure}
+\centering
+\includesvg{oe.svg}
+\end{figure}
+\end{textblock}
+
+\end{document}
