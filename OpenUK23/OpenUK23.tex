@@ -3,21 +3,26 @@
 \usepackage[showboxes]{textpos}
 \usepackage{anyfontsize}
 \usepackage{svg}
+\usepackage{graphicx}
 
 \TPGrid{3}{3}
+\usetheme{Darmstadt}
+\title{Yocto Project}
+
+\setbeamerfont{block body}{size=\Huge}
 
 \begin{document}
 
 \begin{textblock}{1}(1,0)
 \fontsize{32}{36}\selectfont
-\begin{centering}
+\begin{block}{The Yocto Project}
 Yocto Project
 
 February 6
 
 Brussels
 
-\end{centering}
+\end{block}
 \end{textblock}
 
 \begin{textblock}{1}(0,0)
@@ -31,14 +36,19 @@ Block 0 0
 Block 0 2
 \end{textblock}
 
-\begin{textblock}{1}(0,1)
+\begin{textblock}{.5}(0,1)
 \huge
 Block 0 1
 \end{textblock}
 
-\begin{textblock}{1}(1,1)
+\begin{textblock}{2}(1,1)
 \huge
-Block 1 1
+	\begin{block}{}
+	\begin{figure}
+	\centering
+	\includegraphics[scale=1.5]{yp-how-it-works-new-diagram}
+	\end{figure}
+	\end{block}
 \end{textblock}
 
 \begin{textblock}{1}(1,2)
