@@ -3,6 +3,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 \usepackage{color}
+\usepackage{fancyvrb}
 
 \makeatletter
 \def\url@smallurlstyle{%
@@ -36,30 +37,135 @@
 \section{Introduction}
 
 \begin{frame}
-\frametitle{What is OpenEmbedded}
+\frametitle{What is Problem}
 
 \begin{itemize}
-\item Started as a build system for embedded devices
-\item Three basic principles
+\item In the good old days, there was one directory
 	\begin{itemize}
-		\item{Machine}
-		\item{Distribution}
-		\item{Image}
+		\item \url{https://github.com/openembedded/openembedded}
+		\item{Several thousand recipes}
+		\item{And collections}
 	\end{itemize}
+\item Many Problems ....
+	\begin{itemize}
+		\item Inter recipe dependencies
+		\item Many versions of one package
+		\item Untestable matrix
+	\end{itemize}
+\item But, one checkout and you had everything!
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{What is the Yocto Project}
+\frametitle{Introducing Openembedded-core}
 
 \begin{itemize}
-\item Linux Foundation's first collaborative project
-\item Membership is limited to Linux Foundation members
-\item Three membership level Silver, Gold and Platinum
-\item Provides financial support for testing hardware
-\item Pays Richard Purdie and Michael Halstead
+\item In 2010, the Yocto Project was created
+\item The Yocto Project added dedicated engineers
+\item OpenEmbedded Classic turns into
+	\begin{itemize}
+			\item OpenEmbedded-core
+			\item meta-oe
+			\item several other layers
+	\end{itemize}
+\item OpenEmbedded-core is extensively tested
+\item Less testing as you get further from core
 \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{So What is the Problem?}
+
+\begin{itemize}
+\item How do I keep track of all these layers?
+\item Branches within layers, specific commits
+\item Layer dependencies
+\item Many possible permutations!!
+\end{itemize}
+
+\end{frame}
+
+\section{Current solutions}
+
+\begin{frame}
+\frametitle{What has been tried?}
+
+\begin{itemize}
+\item Combo Layer
+	\begin{itemize}
+		\item Used to create Poky
+	\end{itemize}
+\item Repo
+	\begin{itemize}
+		\item Created by Google for Android
+		\item Likes to update itself
+		\item Please use Kas instead
+	\end{itemize}
+\item Kas
+	\begin{itemize}
+		\item Created by Siemens
+		\item Jon Mason has some talks on using it
+	\end{itemize}
+\item oe-setup-layers
+	\begin{itemize}
+		\item Included in bitake
+		\item Uses a script with minimal dependencies
+		\item snapshots a set of layers
+	\end{itemize}
+\item Print screen of banner from running bitbake
+\end{itemize}
+
+\end{frame}
+
+\section{Git Submodules}
+
+\begin{frame}
+\frametitle{Git submodules}
+
+\begin{itemize}
+\item Submodules let you manage git repos within other git repos
+\item Fix branches of each submodule
+\item Fix hash of each repo
+\item Can work upstream in eah repo, if you are careful
+\item Easy to pass layer setups to other people
+\item Not as good as managing conf parts of build
+\end{itemize}
+
+\end{frame}
+
+\section{Examples}
+
+\begin{frame}[fragile]
+\frametitle{Checking out a set of layers}
+
+\begin{Verbatim}[fontsize=\tiny]
+$ mkdir new-project; cd new-project; git init
+$ git submodule add -b 2.0 https://github.com/openembedded/bitbake.git
+$ git submodule add -b kirkstone https://github.com/openembedded/openembedded-core.git
+$ git submodule add -b kirkstone https://github.com/openembedded/meta-openembedded.git
+$ git submodule add -b kirkstone https://github.com/meta-qt5/meta-qt5.git
+$ git submodule add -b kirkstone https://github.com/balister/meta-sdr.git
+$ git submodule add -b kirkstone https://git.ti.com/git/arago-project/meta-ti.git
+$ git submodule add -b kirkstone https://git.yoctoproject.org/meta-arm
+$ git submodule update --init
+$ git commit -a -m "Build gnuradio for TI boards"
+\end{Verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Checkout and build gnuradio-demo-image}
+
+\begin{Verbatim}[fontsize=\tiny]
+$ git clone -b kirkstone-ti https://github.com/balister/sdr-build.git kirkstone-ti
+$ cd kirkstone-ti
+$ git submodule update --init
+$ TEMPLATECONF=`pwd`/meta-sdr/conf/conf-ti source openembedded-core ./build ./bitbake
+$ export MACHINE=beagle-x15
+$ bitbake gnuradio-demo-image
+\end{Verbatim}
 
 \end{frame}
 
